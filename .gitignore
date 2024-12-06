@@ -1,0 +1,52 @@
+﻿# Python
+__pycache__/
+*.py[cod]
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+
+# Jupyter Notebook
+.ipynb_checkpoints/
+
+# Environnements virtuels
+env/
+venv/
+.venv/
+
+# Configuration IDE
+.vscode/
+.idea/
+
+# Logs et fichiers temporaires
+*.log
+*.tmp
+*.temp
+*.out
+*.pid
+*.bak
+*.swp
+
+# Données sensibles
+*.env
+*.secret
+credentials.json
+config.yaml
+
+# Fichiers de sortie
+*.csv
+*.tsv
+*.h5
+*.db
+*.sqlite3
+*.parquet
+*.feather
+*.pkl
+*.joblib
+
+# Images générées par Jupyter
+*.png
+*.svg
+*.pdf
+*.jpeg
