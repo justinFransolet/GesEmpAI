@@ -35,7 +35,6 @@ credentials.json
 config.yaml
 
 # Fichiers de sortie
-*.csv
 *.tsv
 *.h5
 *.db
