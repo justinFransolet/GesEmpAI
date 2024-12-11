@@ -1,6 +1,6 @@
 import pandas as pd
 
-def display_df(df: pd.DataFrame, max_rows: int = 5, max_columns: int = 5) -> None:
+def display_df(df: pd.DataFrame,name:str, max_rows: int = 5, max_columns: int = 5) -> None:
     """
     Display the DataFrame with a limited number of rows and columns.
 
@@ -8,6 +8,7 @@ def display_df(df: pd.DataFrame, max_rows: int = 5, max_columns: int = 5) -> Non
     :param max_rows: The maximum number of rows to display (default value equals to 5).
     :param max_columns: The maximum number of columns to display (default value equals to 5).
     """
+    print(f"-------------------------------------------\n {name} \n-------------------------------------------")
     with pd.option_context("display.max_rows", max_rows, "display.max_columns", max_columns):
         print(df)
 
