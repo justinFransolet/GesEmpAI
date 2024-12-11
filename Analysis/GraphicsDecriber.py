@@ -55,20 +55,6 @@ def display_box_plot(df: pd.DataFrame, x: str, y: str) -> None:
     plt.title(f"Distribution de {y} selon {x}")
     plt.show()
 
-def pvalue_statistic(df: pd.DataFrame, column: str, target: str) -> None:
-    """
-    Display the p-value and the statistic of a t-test for a given column and a target
-
-    :param df: The dataframe to analyze
-    :param column: The name of the column to analyze
-    :param target: The name of the target column
-    """
-    yes = df[df[target] == "Yes"][column]
-    no = df[df[target] == "No"][column]
-    stat, pval = ttest_ind(yes.dropna(), no.dropna(), equal_var=False)
-    print(f"T-test {column} vs {target}:")
-    print(f"Statistique = {stat}, p-value = {pval}")
-
 def display_graphics_contingency(df: pd.DataFrame, column1: str, column2: str) -> None:
     """
     Display graphics for a given contingency table
