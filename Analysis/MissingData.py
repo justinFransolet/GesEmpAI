@@ -11,8 +11,6 @@ def textual_missing_data(df: pd.DataFrame, name: str) -> None:
     """
     # Format the missing data
     missing_data = df.isnull().sum()
-    missing_data = missing_data[missing_data > 0]
-    missing_data = missing_data.sort_values(ascending=False)
     # Display the missing data
     print(f"Valeurs manquantes dans {name} :\n----------------------------")
     print(f"{missing_data}\n")
