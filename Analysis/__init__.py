@@ -2,6 +2,6 @@
 
 from Describe import *
 from Distribution import *
-from Format import *
+from Structure import *
 from GraphicsDecriber import *
 from MissingData import *
