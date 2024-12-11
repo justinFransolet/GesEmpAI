@@ -21,3 +21,12 @@ def visualize_structure(df: pd.DataFrame,name: str) -> None:
     """
     print(f"-------------------------------------------\n {name} \n-------------------------------------------")
     df.info()
+
+def nb_unqiue_users(df: pd.DataFrame) -> int:
+    """
+    Return the number of unique users in the DataFrame.
+
+    :param df: The DataFrame to analyze.
+    :return: The number of unique users.
+    """
+    return df['EmployeeID'].nunique()
