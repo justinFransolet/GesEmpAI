@@ -15,7 +15,7 @@ def describe_values_columns(df: pd.DataFrame, columns: str) -> None:
     :param df: The dataframe to describe the columns
     :param columns: The name of the columns to describe values
     """
-    print(df[columns].value_counts())
+    print(df[columns].value_counts(),"\n--------------------------------------------\n")
 
 def describe_columns(df: pd.DataFrame, columns: str) -> None:
     """
