@@ -1,7 +1,6 @@
 import seaborn as sns
 import matplotlib.pyplot as plt
 import pandas as pd
-import missingno as msno
 
 def display_graphics_numeral_column(df: pd.DataFrame, column: str) -> None:
     """
@@ -36,8 +35,9 @@ def display_heatmap_numeric_values(df: pd.DataFrame, columns: [str]) -> None:
     :param df: The dataframe to analyze
     :param columns: The list of numeric columns to analyze
     """
-    plt.figure(figsize=(5,4))
-    msno.heatmap(df[columns])
+    plt.figure(figsize=(10,6))
+    corr = df[columns].corr()
+    sns.heatmap(corr, annot=True, cmap='coolwarm')
     plt.title("Heatmap des corrélations entre variables numériques")
     plt.show()
 
