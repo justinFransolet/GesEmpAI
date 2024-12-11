@@ -1,3 +1,3 @@
 #GesEmpAI/DataExtractor/__init__.py
 
-from CSVExtractor import *
+from .CSVExtractor import *
