@@ -2,7 +2,6 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 import pandas as pd
 import missingno as msno
-from scipy.stats import ttest_ind
 
 def display_graphics_numeral_column(df: pd.DataFrame, column: str) -> None:
     """

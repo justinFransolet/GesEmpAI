@@ -9,4 +9,4 @@ def impute_median(df: pd.DataFrame, column: str) -> None:
     """
 
     median_num_comp = df[column].median()
-    df['NumCompaniesWorked'].fillna(median_num_comp, inplace=True)
+    df[column].fillna(median_num_comp, inplace=True)
