@@ -5,14 +5,14 @@ import matplotlib.pyplot as plt
 def KernelSVMModel(x_train: [], y_train: [], x_test: [], y_test: []) -> None:
     """
     This function is used to train and test the Kernel SVM model
-    
+
     :param x_train: Data to train the model
     :param y_train: Target to train the model
     :param x_test: Data to test the model
     :param y_test: Target to test the model
     """
     # Initialisation et entraînement du modèle
-    svm = SVC(probability=True)
+    svm = SVC(probability=True, kernel="poly",gamma="scale")
     svm.fit(x_train, y_train)
 
     # Prédictions
