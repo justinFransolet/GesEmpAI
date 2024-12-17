@@ -15,10 +15,10 @@ def DecisionTreeModel(X_train, y_train, X_test, y_test):
     :return: None
     """
 
-    # Étape 1 : Initialisation du modèle
-    tree_model = DecisionTreeClassifier(random_state=42)
+    # Initialisation du modèle
+    tree_model = DecisionTreeClassifier(max_depth=None, random_state=42)
 
-    # Étape 2 : Entraînement initial et évaluation de base
+    # Entraînement et évaluation
     tree_model.fit(X_train, y_train)
     y_pred_initial = tree_model.predict(X_test)
 
@@ -31,11 +31,11 @@ def DecisionTreeModel(X_train, y_train, X_test, y_test):
         roc_auc_initial = roc_auc_score(y_test, y_proba_initial)
         print("AUC-ROC initial :", roc_auc_initial)
 
-    # Étape 3 : Optimisation avec GridSearchCV
+    # Optimisation avec GridSearchCV
     param_grid = {
-        'max_depth': [3, 5, 10, None],
-        'min_samples_split': [2, 5, 10],
-        'min_samples_leaf': [1, 2, 4],
+        'max_depth': [3, 5, 8, 10, 20, None],
+        'min_samples_split': [2, 5, 8, 10],
+        'min_samples_leaf': [1, 2, 3, 4, 5],
         'criterion': ['gini', 'entropy']
     }
     grid_search = GridSearchCV(estimator=tree_model, param_grid=param_grid, cv=5, scoring='accuracy', n_jobs=-1)
@@ -45,11 +45,11 @@ def DecisionTreeModel(X_train, y_train, X_test, y_test):
     print("Meilleurs paramètres :", grid_search.best_params_)
     print("Meilleure précision (cross-validation) :", grid_search.best_score_)
 
-    # Étape 4 : Optimisation avec RandomizedSearchCV
+    # Optimisation avec RandomizedSearchCV
     param_distributions = {
-        'max_depth': [3, 5, 10, None],
-        'min_samples_split': np.arange(2, 20, 2),
-        'min_samples_leaf': np.arange(1, 10),
+        'max_depth': [3, 5, 8, 10, 20, None],
+        'min_samples_split': [2, 5, 8, 10],
+        'min_samples_leaf': [1, 2, 3, 4, 5],
         'criterion': ['gini', 'entropy']
     }
     random_search = RandomizedSearchCV(estimator=tree_model, param_distributions=param_distributions, n_iter=50, cv=5, scoring='accuracy', n_jobs=-1, random_state=42)
@@ -59,7 +59,7 @@ def DecisionTreeModel(X_train, y_train, X_test, y_test):
     print("Meilleurs paramètres :", random_search.best_params_)
     print("Meilleure précision (cross-validation) :", random_search.best_score_)
 
-    # Étape 5 : Validation croisée avec le modèle optimisé
+    # Validation croisée avec le modèle optimisé
     best_tree = DecisionTreeClassifier(**random_search.best_params_, random_state=42)
     cv_scores = cross_val_score(best_tree, X_train, y_train, cv=5, scoring='accuracy')
 
@@ -67,7 +67,7 @@ def DecisionTreeModel(X_train, y_train, X_test, y_test):
     print("Scores de validation croisée :", cv_scores)
     print("Score moyen :", cv_scores.mean())
 
-    # Étape 6 : Évaluation finale sur le jeu de test
+    # Évaluation finale sur le jeu de test
     best_tree.fit(X_train, y_train)
     y_pred_final = best_tree.predict(X_test)
 
