@@ -2,7 +2,6 @@ from sklearn.tree import DecisionTreeClassifier
 from sklearn.metrics import confusion_matrix, classification_report, roc_auc_score, roc_curve
 from sklearn.model_selection import GridSearchCV, RandomizedSearchCV, cross_val_score
 import matplotlib.pyplot as plt
-import numpy as np
 
 def DecisionTreeModel(X_train, y_train, X_test, y_test):
     """
