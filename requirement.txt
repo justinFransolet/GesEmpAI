@@ -4,3 +4,4 @@ missingno==0.5.2
 seaborn==0.13.2
 sklearn==0.0post12
 imblearn==0.0
+xgboost==2.1.3
