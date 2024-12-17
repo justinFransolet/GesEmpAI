@@ -1,6 +1,7 @@
 import xgboost as xgb
 from sklearn.metrics import classification_report, confusion_matrix, roc_auc_score, RocCurveDisplay
 import matplotlib.pyplot as plt
+from sklearn.model_selection import GridSearchCV
 
 
 def tune_xgboost_hyperparameters(X_train, y_train):
