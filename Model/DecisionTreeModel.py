@@ -38,6 +38,7 @@ def DecisionTreeModel(X_train, y_train, X_test, y_test):
         'min_samples_leaf': [1, 2, 3, 4, 5],
         'criterion': ['gini', 'entropy']
     }
+
     grid_search = GridSearchCV(estimator=tree_model, param_grid=param_grid, cv=5, scoring='accuracy', n_jobs=-1)
     grid_search.fit(X_train, y_train)
 
@@ -52,6 +53,7 @@ def DecisionTreeModel(X_train, y_train, X_test, y_test):
         'min_samples_leaf': [1, 2, 3, 4, 5],
         'criterion': ['gini', 'entropy']
     }
+
     random_search = RandomizedSearchCV(estimator=tree_model, param_distributions=param_distributions, n_iter=50, cv=5, scoring='accuracy', n_jobs=-1, random_state=42)
     random_search.fit(X_train, y_train)
 
@@ -60,10 +62,8 @@ def DecisionTreeModel(X_train, y_train, X_test, y_test):
     print("Meilleure précision (cross-validation) :", random_search.best_score_)
 
     # Validation croisée avec le modèle optimisé
-    start = time.time()
     best_tree = DecisionTreeClassifier(**random_search.best_params_, random_state=42)
     cv_scores = cross_val_score(best_tree, X_train, y_train, cv=5, scoring='accuracy')
-    end = time.time()
 
     print("\n=== Validation croisée avec le modèle optimisé ===")
     print("Scores de validation croisée :", cv_scores)
@@ -74,7 +74,6 @@ def DecisionTreeModel(X_train, y_train, X_test, y_test):
     y_pred_final = best_tree.predict(X_test)
 
     print("\n=== Résultats finaux ===")
-    print(f"Le temps d'exécution est de {end - start}")
     print("Matrice de Confusion :\n", confusion_matrix(y_test, y_pred_final))
     print("Rapport de Classification :\n", classification_report(y_test, y_pred_final))
 
