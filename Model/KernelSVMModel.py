@@ -1,6 +1,7 @@
 from sklearn.svm import SVC
 from sklearn.metrics import confusion_matrix, classification_report, roc_auc_score, roc_curve
 import matplotlib.pyplot as plt
+import time
 
 def KernelSVMModel(x_train: [], y_train: [], x_test: [], y_test: [],method: str, c_value: float) -> None:
     """
@@ -13,6 +14,7 @@ def KernelSVMModel(x_train: [], y_train: [], x_test: [], y_test: [],method: str,
     :param method: Method used to train the model
     :param c_value: Regularization parameter
     """
+    start = time.time()
     # Initialisation et entraînement du modèle
     svm = SVC(probability=True, kernel=method,gamma="scale", C=c_value)
     svm.fit(x_train, y_train)
@@ -20,7 +22,9 @@ def KernelSVMModel(x_train: [], y_train: [], x_test: [], y_test: [],method: str,
     # Prédictions
     y_pred_svm = svm.predict(x_test)
 
+    end = time.time()
     print(f"\nKernel SVM utilisant la méthode {method} avec un régulation de {c_value}\n")
+    print(f"Le temps d'exécution est de {end - start} secondes")
     # Matrice de confusion
     conf_matrix_svm = confusion_matrix(y_test, y_pred_svm)
     print("Matrice de Confusion (SVM) :\n", conf_matrix_svm)

@@ -2,6 +2,7 @@ from sklearn.tree import DecisionTreeClassifier
 from sklearn.metrics import confusion_matrix, classification_report, roc_auc_score, roc_curve
 from sklearn.model_selection import GridSearchCV, RandomizedSearchCV, cross_val_score
 import matplotlib.pyplot as plt
+import time
 
 def DecisionTreeModel(X_train, y_train, X_test, y_test):
     """
@@ -59,8 +60,10 @@ def DecisionTreeModel(X_train, y_train, X_test, y_test):
     print("Meilleure précision (cross-validation) :", random_search.best_score_)
 
     # Validation croisée avec le modèle optimisé
+    start = time.time()
     best_tree = DecisionTreeClassifier(**random_search.best_params_, random_state=42)
     cv_scores = cross_val_score(best_tree, X_train, y_train, cv=5, scoring='accuracy')
+    end = time.time()
 
     print("\n=== Validation croisée avec le modèle optimisé ===")
     print("Scores de validation croisée :", cv_scores)
@@ -71,6 +74,7 @@ def DecisionTreeModel(X_train, y_train, X_test, y_test):
     y_pred_final = best_tree.predict(X_test)
 
     print("\n=== Résultats finaux ===")
+    print(f"Le temps d'exécution est de {end - start}")
     print("Matrice de Confusion :\n", confusion_matrix(y_test, y_pred_final))
     print("Rapport de Classification :\n", classification_report(y_test, y_pred_final))
 
