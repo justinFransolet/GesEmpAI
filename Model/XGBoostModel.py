@@ -1,7 +1,6 @@
 import xgboost as xgb
 from sklearn.metrics import classification_report, confusion_matrix, roc_auc_score, RocCurveDisplay
 import matplotlib.pyplot as plt
-from sklearn.model_selection import GridSearchCV
 
 
 def tune_xgboost_hyperparameters(X_train, y_train):
@@ -73,24 +72,58 @@ def predict_xgboost_model(model, X_test):
     return y_pred, y_proba
 
 
-def evaluate_xgboost_model(y_test, y_pred, y_proba):
+def evaluate_xgboost_model(model, X_test, y_test, y_pred, y_proba):
     """
-    Évalue les performances d'un modèle XGBoost.
+    Évalue les performances d'un modèle XGBoost et affiche l'influence des variables.
 
+    :param model: Le modèle XGBoost entraîné
+    :param X_test: Les données de test
     :param y_test: Les labels réels de test
     :param y_pred: Les prédictions du modèle
     :param y_proba: Les probabilités pour la classe positive
     """
+    import matplotlib.pyplot as plt
+    import numpy as np
+    import pandas as pd
+
+    # Évaluation classique
     print("\n=== Évaluation du modèle XGBoost ===")
     print("Matrice de confusion :")
     print(confusion_matrix(y_test, y_pred))
     print("\nRapport de classification :")
     print(classification_report(y_test, y_pred))
     print(f"ROC-AUC : {roc_auc_score(y_test, y_proba):.5f}")
+    
+    # Courbe ROC
     plt.figure(figsize=(8, 6))
     RocCurveDisplay.from_predictions(y_test, y_proba)
     plt.title("Courbe ROC pour le modèle XGBoost")
     plt.show()
+
+    # Affichage des importances des caractéristiques
+    print("\n=== Importance des variables (caractéristiques) ===")
+    feature_importances = model.feature_importances_
+    feature_names = X_test.columns
+
+    # Créer un DataFrame pour organiser les importances
+    importance_df = pd.DataFrame({
+        'Variable': feature_names,
+        'Importance': feature_importances
+    })
+
+    # Trier les variables par importance
+    importance_df = importance_df.sort_values(by='Importance', ascending=False)
+
+    # Visualisation des importances
+    plt.figure(figsize=(12, 8))
+    plt.barh(importance_df['Variable'], importance_df['Importance'], color='skyblue')
+    plt.xlabel('Importance')
+    plt.ylabel('Variable')
+    plt.title("Influence des Variables sur l'Attrition (XGBoost)")
+    plt.gca().invert_yaxis()  # Inverser l'ordre pour afficher les plus importantes en haut
+    plt.grid(axis='x', linestyle='--', alpha=0.7)
+    plt.show()
+
 
 
 
